@@ -9,13 +9,13 @@ mainSong.play();
 
 //Game Page Canvas
 var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext("2d");
-var moneySound = new Audio('./audio/injection.wav'); //Music
+var context = canvas.getContext("2d");
+var injectionSound = new Audio('./audio/injection.wav'); //Music
 var redSound = new Audio('./audio/virussound.wav'); //Music
-var coneSound = new Audio('./audio/virussound.wav'); //Music
-var themeSong = new Audio('./audio/themesongedit.mp3'); //Music
+var greenSound = new Audio('./audio/virussound.wav'); //Music
+var themeSong = new Audio('./audio/themesongedit.mp3'); //Music New Drama Music
 
-themeSong.volume = 0.0
+themeSong.volume = 0.8
 themeSong.loop = true
 themeSong.play()
 
@@ -50,7 +50,7 @@ var person = {
   x: 240,
   y: 380
 };
-var vanilla = {}; //check if possible to remove PER
+// var GreenVirus = {}; //check if possible to remove PER
 var injections = {};
 var injectionsCaught = 0;
 // Handle keyboard controls
@@ -103,7 +103,7 @@ var update = function (modifier) {
     && person.y <= (injections.y + 50)
     && injections.y <= (person.y + 120)
   ) {
-    moneySound.play(); //injection happy sound PER
+    injectionSound.play(); //injection happy sound PER
     ++injectionsCaught;
     reset();
   }
@@ -127,10 +127,10 @@ function Red (x, y, image, isLoaded, width, height) {
 }
 
 Red.prototype.draw = function () {
-  ctx.save();
-  // ctx.rotate(this.angle += .01);
-  ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  ctx.restore();
+  context.save();
+  // context.rotate(this.angle += .01);
+  context.drawImage(this.image, this.x, this.y, this.width, this.height);
+  context.restore();
 };
 
 function getRandom(min, max) {
@@ -165,13 +165,13 @@ function drawredVirus(){
       && oneRed.y <= (person.y + 120)
     ) {
       oneRed.y += NaN;
-      redSound.play(); // check weight
+      redSound.play(); // check health
       --health;
       checkHealth();
     }})
 };
 
-//Make ice cream - greenVirus PER
+//Make  greenVirus PER
 
 var green = new Image();
 green.src = './images/greenVirus.png';
@@ -187,9 +187,9 @@ function greenVirus (x, y, image, isLoaded, width, height) {
 }
 
 greenVirus.prototype.draw = function () {
-  ctx.save();
-  ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  ctx.restore();
+  context.save();
+  context.drawImage(this.image, this.x, this.y, this.width, this.height);
+  context.restore();
 };
 
 function getRandom(min, max) {
@@ -222,7 +222,7 @@ function drawgreenVirus(){
       && oneVirus.y <= (person.y + 120)
     ) {
       oneVirus.y += NaN;
-      coneSound.play();
+      greenSound.play();
       --health;
       checkHealth();
     }})
@@ -233,32 +233,32 @@ function drawgreenVirus(){
 
 var draw = function () {
   if (background) {
-    ctx.drawImage(backgroundImage, 0, 0);
+    context.drawImage(backgroundImage, 0, 0);
   }
   if (personDraw) {
-    ctx.drawImage(covidPlayerImage, person.x, person.y, 60, 120);
+    context.drawImage(covidPlayerImage, person.x, person.y, 60, 120);
   }
   if (injectionDraw) {
-    ctx.drawImage(injectionImage, injections.x, injections.y, 50, 50);
+    context.drawImage(injectionImage, injections.x, injections.y, 50, 50);
   }
 
   // DISPLAY injection Amount and time
 
-  ctx.fillStyle = "white";
-  ctx.font = "20px Roboto";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.fillText("Health Points: " + injectionsCaught, 440, 5);
-  ctx.fillText("Remaining Time: " + count, 20, 5);
-  ctx.fillText("Remaining Life: " + health, 425, 30);
+  context.fillStyle = "white";
+  context.font = "20px Roboto";
+  context.textAlign = "left";
+  context.textBaseline = "top";
+  context.fillText("Health Points: " + injectionsCaught, 440, 5);
+  context.fillText("Remaining Time: " + count, 20, 5);
+  context.fillText("Remaining Life: " + health, 425, 30);
 
   // Display game over message when timer finished
   if(finished==true){
-    ctx.fillText("TIME'S UP", 250, 250);
-    ctx.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 200);
+    context.fillText("TIME'S UP", 250, 250);
+    context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 200);
   }
   if(lose == true){
-    ctx.fillText("YOU'RE POSITIVE - STAY AT HOME", 180, 150);
+    context.fillText("YOU'RE POSITIVE - STAY AT HOME", 180, 150);
   }
   
 };

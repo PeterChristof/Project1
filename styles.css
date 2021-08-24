@@ -29,9 +29,9 @@ h2 {
   font-size: 80px;
   font-weight: 700;
   font-family: Helvetica;
-  color: white;
+  color:#F33737;
   margin-bottom: -15px;
-  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  text-shadow: 11px -8px 0px black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
 h2 a{
@@ -57,15 +57,12 @@ body button {
   box-shadow: 0;
   border-radius: 15px;
   margin-bottom: 10px;
-  -webkit-filter: grayscale(50%);
 }
 
 button:hover {
   
   background-size: 350px;
   background-position: center;
-  -webkit-filter: grayscale(10%);
-
 }
 
 
@@ -120,7 +117,7 @@ button:hover {
   color: whitesmoke;
 }
 .objective h4 {
-  font-size: 15px;
+  font-size: 18px;
   background-color: #219E08;
   color: black;
 }
@@ -131,7 +128,7 @@ h3 {
 }
 
 .red {
-  width: 15%;
+  width: 10%;
   background-color: #219E08;
   padding-bottom: 8px;
 }
@@ -142,9 +139,9 @@ h3 {
 }
 
 .arrows {
-  width: 20%;
+  width: 15%;
   background-color: #219E08;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .injection {

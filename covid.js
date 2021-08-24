@@ -1,98 +1,94 @@
-// Music on start page
-
-var canvas = document.getElementById('canvasmain');
-var mainSong = new Audio('./audio/GUTS TAKE A LOOK AROUND YOU.mp3'); //Music
+let mainSong = new Audio('./audio/GUTS TAKE A LOOK AROUND YOU.mp3'); //Music
 
 mainSong.loop = true;
-mainSong.volume = 0.5;
+mainSong.volume = 0.8;
 mainSong.play();
 
 //Game Page Canvas
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext("2d");
-var injectionSound = new Audio('./audio/injection.wav'); //Music
-var redSound = new Audio('./audio/virussound.wav'); //Music
-var greenSound = new Audio('./audio/virussound.wav'); //Music
-var themeSong = new Audio('./audio/themesongedit.mp3'); //Music New Drama Music
+let canvas = document.getElementById('canvas');
+let context = canvas.getContext("2d");
+let injectionSound = new Audio('./audio/injection.wav'); //Music
+let redSound = new Audio('./audio/virussound.wav'); //Music
+let greenSound = new Audio('./audio/virussound.wav'); //Music
+let themeSong = new Audio('./audio/walking-dead.mp3'); //Music New Drama Music
 
-themeSong.volume = 0.8
-themeSong.loop = true
-themeSong.play()
-
+themeSong.volume = 0.8;
+themeSong.loop = true;
+themeSong.play();
 
 //Background
-var background = false;
-var backgroundImage = new Image();
+let background = false;
+let backgroundImage = new Image();
 backgroundImage.onload = function () {
   background = true;
 };
 backgroundImage.src = "./images/world.jpg";
 
 // Person
-var personDraw = false;
-var covidPlayerImage = new Image();
+let personDraw = false;
+let covidPlayerImage = new Image();
   covidPlayerImage.onload = function () {
     personDraw = true;
 };
-  covidPlayerImage.src = "./images/CovidPlayer1.png";
+  covidPlayerImage.src = "./images/covidwarrior.png";
 
 // Injection
-var injectionDraw = false;
-var injectionImage = new Image();
+let injectionDraw = false;
+let injectionImage = new Image();
 injectionImage.onload = function () {
   injectionDraw = true;
 };
   injectionImage.src = "./images/injectionImage.png";
   
 // Controls and Speed
-var person = {
+let person = {
   speed: 300,
   x: 240,
   y: 380
 };
-// var GreenVirus = {}; //check if possible to remove PER
-var injections = {};
-var injectionsCaught = 0;
+// let GreenVirus = {}; //check if possible to remove PER
+let injections = {};
+let injectionsCaught = 0;
 // Handle keyboard controls
-var keysDown = {};
-// Check for keys pressed where key represents the keycode captured
+let keysDown = {};
+// Check for keys pressed where key represents the key captured
 addEventListener("keydown", function (key) {
-  keysDown[key.keyCode] = true; //check if necessary PER
+  keysDown[key.key] = true; //check if necessary PER
 }, false);
 addEventListener("keyup", function (key) {
-  delete keysDown[key.keyCode];
+  delete keysDown[key.key];
 }, false);
 
 // Sets person's location and injectionss random placement
-var reset = function () {
+let reset = function () {
   injections.x = 32 + (Math.random() * (canvas.width - 70)); //subtract from canvas height so injections dont leave canvas
   injections.y = 32 + (Math.random() * (canvas.height - 70));
 }
 
 // Controls
-var update = function (modifier) {
-  if (38 in keysDown) { 
+let update = function (modifier) {
+  if ("ArrowUp" in keysDown) { 
     person.y -= person.speed * modifier;
     if (person.y < 0) {
       person.y = 0;
       }
   }
-  if (40 in keysDown) { 
+  if ("ArrowDown" in keysDown) { 
     person.y += person.speed * modifier;
     if (person.y > 380) {
       person.y = 380;
       }
   }
-  if (37 in keysDown) { 
+  if ("ArrowLeft" in keysDown) { 
     person.x -= person.speed * modifier;
     if (person.x <= 0) {
       person.x = 0;
       }
   }
-  if (39 in keysDown) { 
+  if ("ArrowRight" in keysDown) { 
     person.x += person.speed * modifier;
-    if (person.x >= 600) {
-      person.x = (canvas.width-person.x);
+    if (person.x >= 500) {
+      person.x = 500;
       }
   }
 
@@ -111,7 +107,7 @@ var update = function (modifier) {
 };
 
 //Make redVirus
-var redVirus = new Image();
+let redVirus = new Image();
 redVirus.src = './images/redVirus.png';
 
 function Red (x, y, image, isLoaded, width, height) {
@@ -137,7 +133,7 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var myRed = [
+let myRed = [
   new Red (getRandom(0, 600), ((Math.random() * canvas.height - 410)), redVirus, false, 50, 50),
   new Red (getRandom(0, 600), ((Math.random() * canvas.height - 410)), redVirus, false, 50, 50),
   new Red (getRandom(0, 600), ((Math.random() * canvas.height - 410)), redVirus, false, 50, 50),
@@ -145,7 +141,7 @@ var myRed = [
 ];
 
 function makeredVirus() {
-  for (var i=0; i < 1; i++ ) {
+  for (let i=0; i < 1; i++ ) {
   myRed.push(new Red(getRandom(0, 600), ((Math.random() * canvas.height - 410)), redVirus, false, 40, 40));
 
   }
@@ -173,7 +169,7 @@ function drawredVirus(){
 
 //Make  greenVirus PER
 
-var green = new Image();
+let green = new Image();
 green.src = './images/greenVirus.png';
 
 function greenVirus (x, y, image, isLoaded, width, height) {
@@ -196,7 +192,7 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var mygreenVirus = [
+let mygreenVirus = [
   new greenVirus (getRandom(0, 800), ((Math.random() * canvas.height - 410)), green, false, 40, 40),
   new greenVirus (getRandom(0, 800), ((Math.random() * canvas.height - 410)), green, false, 40, 40),
   new greenVirus (getRandom(0, 800), ((Math.random() * canvas.height - 410)), green, false, 40, 40),
@@ -204,7 +200,7 @@ var mygreenVirus = [
 ];
 
 function makegreenVirus() {
-  for (var i=0; i < 1; i++ ) {
+  for (let i=0; i < 1; i++ ) {
   mygreenVirus.push(new greenVirus(getRandom(0, 800), ((Math.random() * canvas.height - 410)), green, false, 40, 40));
 
   }
@@ -231,12 +227,12 @@ function drawgreenVirus(){
  
 // DRAW ON THE CANVAS //
 
-var draw = function () {
+let draw = function () {
   if (background) {
     context.drawImage(backgroundImage, 0, 0);
   }
   if (personDraw) {
-    context.drawImage(covidPlayerImage, person.x, person.y, 60, 120);
+    context.drawImage(covidPlayerImage, person.x, person.y, 120, 120);
   }
   if (injectionDraw) {
     context.drawImage(injectionImage, injections.x, injections.y, 50, 50);
@@ -254,17 +250,17 @@ var draw = function () {
 
   // Display game over message when timer finished
   if(finished==true){
-    context.fillText("TIME'S UP", 250, 250);
+    context.fillText("TIME'S UP", 250, 150);
     context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 200);
   }
   if(lose == true){
-    context.fillText("YOU'RE POSITIVE - STAY AT HOME", 180, 150);
+    context.fillText("YOU'RE POSITIVE - STAY AT HOME", 150, 250);
   }
   
 };
 
-var health = 5;
-var lose = false; 
+let health = 8;
+let lose = false; 
 function checkHealth(){
     if (health <= 0)
     {
@@ -281,9 +277,9 @@ function stopDraw(){
   setTimeout(main, 20000)
 }
 
-var count = 30; // seconds
-var finished = false;
-var counter =function(){
+let count = 30; // seconds
+let finished = false;
+let counter =function(){
   count=count-1; // countown by 1 every second
   // when count reaches 0 clear the timer, hide person and
   // finish the game
@@ -299,7 +295,7 @@ var counter =function(){
     }
 }
 
-var delay = 2000;
+let delay = 2000;
 setTimeout(function () {
     delay = 2000
 }, 2000);
@@ -316,7 +312,7 @@ timeout();
 // timer interval is every second (1000ms)
 setInterval(counter, 1000);
 // The main game loop
-var main = function () {
+let main = function () {
   update(0.02); //you can adjust the speed of person
   draw();
   drawredVirus();

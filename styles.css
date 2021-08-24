@@ -71,55 +71,35 @@ button:hover {
   padding-bottom: 20px;
 }
 
+
+
 .instructions {
-  flex-flow: column;
-  width: 30%;
-  padding: 10px 30px;
-  border-radius: 15px;
-  background-color: #dee5ef;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.instructions p{
-  background-color: #dee5ef;
-  font-size: 10px;
-  margin-top: -20px;
-}
-
-.instructions h3 {
-  font-size: 20px;
-  background-color: #dee5ef;
-  padding-bottom: 15px;
-  color: #2B125F;
-}
-
-.objective {
   flex-flow: column;
   width: 60%;
   padding: 0px 140px;
   border-radius: 15px;
-  background-color: #219E08;
+  background-color: #084b9e85;
   margin-bottom: 10px;
 }
 
-.objective p{
-  background-color: #219E08;
+.instructions p{
+  color: white;
   font-size: 18px;
   margin-top: -20px;
+  background-color: transparent;
 }
 
-.objective h3 {
+.instructions h3 {
   font-size: 20px;
-  background-color: #219E08;
   padding-bottom: 15px;
   padding-top: 15px;
   color: whitesmoke;
+  background-color: transparent;
 }
-.objective h4 {
+.instructions h4 {
   font-size: 18px;
-  background-color: #219E08;
-  color: black;
+  color: white;
+  background-color: transparent;
 }
 
 
@@ -129,34 +109,23 @@ h3 {
 
 .red {
   width: 10%;
-  background-color: #219E08;
   padding-bottom: 8px;
 }
 .green {
   width: 10%;
-  background-color: #219E08;
   padding-bottom: 8px;
 }
 
 .arrows {
   width: 15%;
-  background-color: #219E08;
   padding-bottom: 10px;
 }
 
 .injection {
   width: 8%;
-  background-color: #219E08;
 }
 
 .game-start a{
   text-decoration: none;
   color: white;
-}
-
-.oprah-header a{
-  font-size: 3390px;
-  font-weight: 700;
-  padding: 30px 0;
-  text-decoration: none;
 }

@@ -40,15 +40,30 @@ injectionImage.onload = function () {
 };
   injectionImage.src = "./images/injectionImage.png";
   
+  //Adding mask
+  let maskDraw = false;
+  let maskImage = new Image();
+  maskImage.onload = function () {
+    maskDraw = true;
+  };
+    maskImage.src = "./images/mask1.png";
+
 // Controls and Speed
 let person = {
   speed: 300,
   x: 240,
   y: 380
 };
+
 // let GreenVirus = {}; //check if possible to remove PER
 let injections = {};
 let injectionsCaught = 0;
+
+//Adding mask Variable
+let mask = {};
+let maskCaught = 0;
+
+
 // Handle keyboard controls
 let keysDown = {};
 // Check for keys pressed where key represents the key captured
@@ -63,6 +78,12 @@ addEventListener("keyup", function (key) {
 let reset = function () {
   injections.x = 32 + (Math.random() * (canvas.width - 70)); //subtract from canvas height so injections dont leave canvas
   injections.y = 32 + (Math.random() * (canvas.height - 70));
+}
+
+//Adding Mask Location
+let maskReset = function () {
+  mask.x = 35 + (Math.random() * (canvas.width - 70)); //subtract from canvas height so MASK dont leave canvas
+  mask.y = 35 + (Math.random() * (canvas.height - 70));
 }
 
 // Controls
@@ -102,6 +123,19 @@ let update = function (modifier) {
     injectionSound.play(); //injection happy sound PER
     ++injectionsCaught;
     reset();
+  }
+
+//Add person and mask collision
+
+  if (
+    person.x <= (mask.x + 34)
+    && mask.x <= (person.x + 55)
+    && person.y <= (mask.y + 55)
+    && mask.y <= (person.y + 125)
+  ) {
+    injectionSound.play(); //injection happy sound PER
+    ++maskCaught;
+    maskReset();
   }
 
 };
@@ -236,6 +270,9 @@ let draw = function () {
   }
   if (injectionDraw) {
     context.drawImage(injectionImage, injections.x, injections.y, 50, 50);
+    if (maskDraw) {
+      context.drawImage(maskImage, mask.x, mask.y, 75, 75); //adding mask to canvas
+    }
   }
 
   // DISPLAY injection Amount and time
@@ -244,7 +281,7 @@ let draw = function () {
   context.font = "20px Roboto";
   context.textAlign = "left";
   context.textBaseline = "top";
-  context.fillText("Health Points: " + injectionsCaught, 440, 5);
+  context.fillText("Health Points: "  + (maskCaught + injectionsCaught ), 440, 5);
   context.fillText("Remaining Time: " + count, 20, 5);
   context.fillText("Remaining Life: " + health, 425, 30);
 
@@ -270,7 +307,7 @@ function checkHealth(){
        injectionDraw=false;
        personDraw=false;
        stopDraw();
-
+maskDraw = false;
   }}
 
 function stopDraw(){
@@ -292,6 +329,7 @@ let counter =function(){
        count=0;
        injectionDraw=false;
        personDraw=false;
+       maskDraw=false;
     }
 }
 
@@ -322,3 +360,4 @@ let main = function () {
 
 reset();
 main();
+maskReset();

@@ -1,8 +1,3 @@
-let mainSong = new Audio('./audio/GUTS TAKE A LOOK AROUND YOU.mp3'); //Music
-
-mainSong.loop = true;
-mainSong.volume = 0.8;
-mainSong.play();
 
 //Game Page Canvas
 let canvas = document.getElementById('canvas');
@@ -12,7 +7,7 @@ let redSound = new Audio('./audio/virussound.wav'); //Music
 let greenSound = new Audio('./audio/virussound.wav'); //Music
 let themeSong = new Audio('./audio/walking-dead.mp3'); //Music New Drama Music
 
-themeSong.volume = 0.8;
+themeSong.volume = 1;
 themeSong.loop = true;
 themeSong.play();
 
@@ -128,10 +123,10 @@ let update = function (modifier) {
 //Add person and mask collision
 
   if (
-    person.x <= (mask.x + 34)
-    && mask.x <= (person.x + 55)
-    && person.y <= (mask.y + 55)
-    && mask.y <= (person.y + 125)
+    person.x <= (mask.x + 30)
+    && mask.x <= (person.x + 50)
+    && person.y <= (mask.y + 50)
+    && mask.y <= (person.y + 120)
   ) {
     injectionSound.play(); //injection happy sound PER
     ++maskCaught;
@@ -281,7 +276,7 @@ let draw = function () {
   context.font = "20px Roboto";
   context.textAlign = "left";
   context.textBaseline = "top";
-  context.fillText("Health Points: "  + (maskCaught + injectionsCaught ), 440, 5);
+  context.fillText("Health Points: "  + (maskCaught + injectionsCaught), 440, 5);
   context.fillText("Remaining Time: " + count, 20, 5);
   context.fillText("Remaining Life: " + health, 425, 30);
 
@@ -291,7 +286,9 @@ let draw = function () {
     context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 200);
   }
   if(lose == true){
-    context.fillText("YOU'RE POSITIVE - STAY AT HOME", 150, 250);
+    context.fillText("YOU'RE POSITIVE - STAY AT HOME", 150, 150);
+    context.fillText("GAME OVER", 250, 200);
+    context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 250);
   }
   
 };
@@ -301,13 +298,14 @@ let lose = false;
 function checkHealth(){
     if (health <= 0)
     {
-       clearInterval(counter);
+       //clearInterval(counter);
        // set game to finished
        lose = true;
        injectionDraw=false;
        personDraw=false;
        stopDraw();
 maskDraw = false;
+health=0;
   }}
 
 function stopDraw(){
@@ -316,20 +314,29 @@ function stopDraw(){
 
 let count = 30; // seconds
 let finished = false;
-let counter =function(){
-  count=count-1; // countown by 1 every second
+let counter = function(){
+  if (lose) {
+    count = count }
+    else {
+      count=count-1;
+  }
+   // countown by 1 every second
   // when count reaches 0 clear the timer, hide person and
   // finish the game
-    if (count <= 0)
+    if (count <= 0 && health > 0)
     {
       // stop the timer
        clearInterval(counter);
        // set game to finished
        finished = true;
        count=0;
+       context.fillText("YOUR SCORE: "  + (maskCaught + injectionsCaught), 225, 450);
        injectionDraw=false;
+       drawgreenVirus=false;
+       drawredVirus=false;
        personDraw=false;
        maskDraw=false;
+
     }
 }
 

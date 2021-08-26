@@ -4,8 +4,8 @@ let canvas = document.getElementById('canvas');
 let context = canvas.getContext("2d");
 let injectionSound = new Audio('./audio/injection.wav'); //Music
 let redSound = new Audio('./audio/virussound.wav'); //Music
-let greenSound = new Audio('./audio/virussound.wav'); //Music
-let themeSong = new Audio('./audio/walking-dead.mp3'); //Music New Drama Music
+let greenSound = new Audio('./audio/sneeze.wav'); //Music
+let themeSong = new Audio('./audio/walking-dead.mp3'); //Music 
 
 themeSong.volume = 1;
 themeSong.loop = true;
@@ -43,14 +43,14 @@ injectionImage.onload = function () {
   };
     maskImage.src = "./images/mask1.png";
 
-// Controls and Speed
+// Adjustment Speed
 let person = {
   speed: 300,
   x: 240,
   y: 380
 };
 
-// let GreenVirus = {}; //check if possible to remove PER
+// let GreenVirus = {};
 let injections = {};
 let injectionsCaught = 0;
 
@@ -59,11 +59,10 @@ let mask = {};
 let maskCaught = 0;
 
 
-// Handle keyboard controls
+// movement - keyboard
 let keysDown = {};
-// Check for keys pressed where key represents the key captured
 addEventListener("keydown", function (key) {
-  keysDown[key.key] = true; //check if necessary PER
+  keysDown[key.key] = true;
 }, false);
 addEventListener("keyup", function (key) {
   delete keysDown[key.key];
@@ -71,14 +70,14 @@ addEventListener("keyup", function (key) {
 
 // Sets person's location and injectionss random placement
 let reset = function () {
-  injections.x = 32 + (Math.random() * (canvas.width - 70)); //subtract from canvas height so injections dont leave canvas
-  injections.y = 32 + (Math.random() * (canvas.height - 70));
+  injections.x = 32 + (Math.random() * (canvas.width - 80)); //subtract from canvas height so injections dont leave canvas
+  injections.y = 32 + (Math.random() * (canvas.height - 80));
 }
 
 //Adding Mask Location
 let maskReset = function () {
-  mask.x = 35 + (Math.random() * (canvas.width - 70)); //subtract from canvas height so MASK dont leave canvas
-  mask.y = 35 + (Math.random() * (canvas.height - 70));
+  mask.x = 35 + (Math.random() * (canvas.width - 80)); //subtract from canvas height so Mask dont leave canvas
+  mask.y = 35 + (Math.random() * (canvas.height - 80));
 }
 
 // Controls
@@ -117,6 +116,7 @@ let update = function (modifier) {
   ) {
     injectionSound.play(); //injection happy sound PER
     ++injectionsCaught;
+    ++injectionsCaught;
     reset();
   }
 
@@ -128,7 +128,7 @@ let update = function (modifier) {
     && person.y <= (mask.y + 50)
     && mask.y <= (person.y + 120)
   ) {
-    injectionSound.play(); //injection happy sound PER
+    injectionSound.play(); //injection happy sound
     ++maskCaught;
     maskReset();
   }
@@ -153,7 +153,6 @@ function Red (x, y, image, isLoaded, width, height) {
 
 Red.prototype.draw = function () {
   context.save();
-  // context.rotate(this.angle += .01);
   context.drawImage(this.image, this.x, this.y, this.width, this.height);
   context.restore();
 };
@@ -182,6 +181,7 @@ function drawredVirus(){
   myRed.forEach(function (oneRed) {
     oneRed.y += 1;
     oneRed.draw();
+
 //person and redVirus collision
     if (
       person.x <= (oneRed.x + 32)
@@ -190,13 +190,14 @@ function drawredVirus(){
       && oneRed.y <= (person.y + 120)
     ) {
       oneRed.y += NaN;
-      redSound.play(); // check health
+      redSound.play(); 
+      --health;
       --health;
       checkHealth();
     }})
 };
 
-//Make  greenVirus PER
+//Make greenVirus
 
 let green = new Image();
 green.src = './images/greenVirus.png';
@@ -239,6 +240,7 @@ function drawgreenVirus(){
   mygreenVirus.forEach(function (oneVirus) {
     oneVirus.y += 1;
     oneVirus.draw();
+
 //person and Virus collision
     if (
       person.x <= (oneVirus.x + 32)
@@ -253,8 +255,7 @@ function drawgreenVirus(){
     }})
 };
 
- 
-// DRAW ON THE CANVAS //
+// Draw on Canvas
 
 let draw = function () {
   if (background) {
@@ -270,20 +271,20 @@ let draw = function () {
     }
   }
 
-  // DISPLAY injection Amount and time
+  // Display injection Amount and time
 
   context.fillStyle = "white";
   context.font = "20px Roboto";
   context.textAlign = "left";
   context.textBaseline = "top";
   context.fillText("Health Points: "  + (maskCaught + injectionsCaught), 440, 5);
-  context.fillText("Remaining Time: " + count, 20, 5);
+  context.fillText("Time left to survive: " + count, 20, 5);
   context.fillText("Remaining Life: " + health, 425, 30);
 
   // Display game over message when timer finished
   if(finished==true){
-    context.fillText("TIME'S UP", 250, 150);
-    context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 200);
+    context.fillText("TIME'S UP - YOU SURVIVED", 180, 290);
+    context.fillText("CLICK THE TITLE TO PLAY AGAIN", 150, 340);
   }
   if(lose == true){
     context.fillText("YOU'RE POSITIVE - STAY AT HOME", 150, 150);
@@ -298,8 +299,7 @@ let lose = false;
 function checkHealth(){
     if (health <= 0)
     {
-       //clearInterval(counter);
-       // set game to finished
+       //finish the game
        lose = true;
        injectionDraw=false;
        personDraw=false;
@@ -330,7 +330,10 @@ let counter = function(){
        // set game to finished
        finished = true;
        count=0;
-       context.fillText("YOUR SCORE: "  + (maskCaught + injectionsCaught), 225, 450);
+       context.fillStyle = "#F33737"; //whatever comes next will be drawn in #F33737
+context.fillRect(0, 425, 600, 425);
+context.fillStyle = "white";
+       context.fillText("YOUR SCORE: " + (maskCaught + injectionsCaught), 225, 455);
        injectionDraw=false;
        drawgreenVirus=false;
        drawredVirus=false;
